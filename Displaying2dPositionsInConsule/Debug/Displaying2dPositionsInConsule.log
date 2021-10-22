@@ -1,0 +1,7 @@
+﻿  Displaying2dPositionsInConsule.cpp
+C:\Users\rothp\OneDrive\Documents\GitHub\OtherProjects\Displaying2dPositionsInConsule\Displaying2dPositionsInConsule.cpp(58,9): error C2360: initialization of 'p' is skipped by 'case' label
+C:\Users\rothp\OneDrive\Documents\GitHub\OtherProjects\Displaying2dPositionsInConsule\Displaying2dPositionsInConsule.cpp(56): message : see declaration of 'p'
+C:\Users\rothp\OneDrive\Documents\GitHub\OtherProjects\Displaying2dPositionsInConsule\Displaying2dPositionsInConsule.cpp(60,9): error C2360: initialization of 'p' is skipped by 'case' label
+C:\Users\rothp\OneDrive\Documents\GitHub\OtherProjects\Displaying2dPositionsInConsule\Displaying2dPositionsInConsule.cpp(56): message : see declaration of 'p'
+C:\Users\rothp\OneDrive\Documents\GitHub\OtherProjects\Displaying2dPositionsInConsule\Displaying2dPositionsInConsule.cpp(64,9): error C2361: initialization of 'p' is skipped by 'default' label
+C:\Users\rothp\OneDrive\Documents\GitHub\OtherProjects\Displaying2dPositionsInConsule\Displaying2dPositionsInConsule.cpp(56): message : see declaration of 'p'
