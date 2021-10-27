@@ -2,6 +2,8 @@
 #include<iostream>
 #include<string>
 #include<vector>
+#include<cassert>
+#include<stdlib.h> 
 using namespace std;
 
 void readLevel(string);
@@ -10,23 +12,76 @@ bool checkCollision(int,int);
 
 class block {
 public:
-    int x;
-    int y;
-    char ch;
+    int x=0;
+    int y=0;
+    char ch=' ';
+    block();
     block(int, int, char);
     
 };
+block::block() {}
 block::block(int X, int Y, char CH) {
-    X = x; y = Y; ch = CH;
+    x = X; y = Y; ch = CH;
 }
-class player : public block {
+
+
+class Player : public block {
 public:
-    player(int, int, char);
+    Player();
+    Player(int, int, char);
+    void movePlayer();
+    int distMoved = 0;
 };
-player::player(int X, int Y, char CH) :block(X, Y, CH) { }
+Player::Player() :block() {}
+Player::Player(int X, int Y, char CH) :block(X, Y, CH) { }
+void Player::movePlayer() {
+    //Input Movement Commands 
+    cout << " To Move Player: 'Right'/'Left'/'Up'/'down' + how far to move. 'END' to end program." << endl;
+    cout << " Move Player: ";
+    string direction;
+    int xDir=0,yDir=0, magnitude;
+    cin >> direction;
+    cin >> magnitude;
+
+    //Use inputted Commands to determine direction of movement
+    if (magnitude < 0)magnitude = 0;
+    if (direction == "right" || direction == "Right") {
+        xDir = 1;
+    }
+    else if (direction == "left" || direction == "Left") {
+        xDir = -1;
+    }
+    else if (direction == "up" || direction == "Up") {
+        yDir = -1;
+    }
+    else if (direction == "down" || direction == "Down") {
+        yDir = 1;
+    }
+    else if (direction == "END") {
+        assert(false);
+    }
+    else {
+        cout << "Invalid Movement! Please input correct movement value!" << endl;
+        movePlayer();
+        return;
+    }
+
+    //check if next place player attempts to move is already occupied. If no, change position and repeat
+    distMoved = 0;
+    for (int i = 0; i < magnitude;i++) {
+        if (!checkCollision(x + xDir, y + yDir)) {
+            x += xDir;y += yDir;
+            distMoved++;
+        }
+        else return;
+    }
+
+}
 
 
-vector <block> blocks;
+Player player=Player();//creates player
+
+vector <block> blocks; //vector for all other blocks
 
 int lvlWidth;
 int lvlHeight;
@@ -34,10 +89,14 @@ int lvlHeight;
 int main()
 {
     readLevel("level.txt");
-    
-    displayLevel();
-   
-   
+    while (1) {
+        system("CLS");
+        displayLevel();
+        cout << " -->Player moved " <<player.distMoved<<" Tiles!" << endl;
+        cout << " -->Player at [" << player.x << "," << player.y << "]" << endl;
+        player.movePlayer();
+    }
+
     return 0;
 }
 
@@ -53,8 +112,8 @@ void readLevel(string dataPath) {
         switch (ch)
         {
         case 'P':
-            player p=player(inX,inY,ch);
-            blocks.push_back(p);
+           player=Player(inX, inY, ch);
+           break;
         case ' ':
             break;
         case '\n':
@@ -62,8 +121,7 @@ void readLevel(string dataPath) {
             inX = 0;
             break;
         default:
-            block b=block(inX,inY,ch);
-            blocks.push_back(b);
+            blocks.push_back(block(inX, inY, ch));
             break;
         }
 
@@ -76,7 +134,11 @@ void displayLevel() {
         for (int x = 0;x < lvlWidth;x++) {//x coords
             bool outputtedChar = false;
             for (int i = 0; i < static_cast<int>(blocks.size());i++) {//at every x and y coord run through every block...
-                if (blocks[i].x == x && blocks[i].y == y) {//until it finds one with matching coords
+                if (player.x == x && player.y == y) {
+                    cout << player.ch;
+                    outputtedChar = true;
+                    break;
+                }else if (blocks[i].x == x && blocks[i].y == y) {//until it finds one with matching coords
                     cout << blocks[i].ch;//output it to counsul
                     outputtedChar = true;
                     break;//end i loop (is this actually ending if statement?)
