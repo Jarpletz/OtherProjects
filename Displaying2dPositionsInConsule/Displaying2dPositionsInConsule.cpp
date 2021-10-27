@@ -47,15 +47,19 @@ void Player::movePlayer() {
     if (magnitude < 0)magnitude = 0;
     if (direction == "right" || direction == "Right") {
         xDir = 1;
+        ch = '>';
     }
     else if (direction == "left" || direction == "Left") {
         xDir = -1;
+        ch='<';
     }
     else if (direction == "up" || direction == "Up") {
         yDir = -1;
+        ch = '^';
     }
     else if (direction == "down" || direction == "Down") {
         yDir = 1;
+        ch = 'v';
     }
     else if (direction == "END") {
         assert(false);
@@ -77,7 +81,6 @@ void Player::movePlayer() {
     }
 
 }
-
 
 Player player=Player();//creates player
 
@@ -111,7 +114,7 @@ void readLevel(string dataPath) {
         if (inX > lvlWidth)lvlWidth = inX;
         switch (ch)
         {
-        case 'P':
+        case 'v':
            player=Player(inX, inY, ch);
            break;
         case ' ':
